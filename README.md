@@ -37,16 +37,44 @@ atc
 
 # 구조
 
+입력값을 받아오고 프로그램을 실행시키기 위한 Main class와 단어를 밀어내기 위한 PushWords class를 구현했다.
+
 ## 1. Main 클래스
 
-- Scanner를 사용해서 input값을 받아온다.
-- 단어(word), 주어진 숫자(n), 이동 방향(direction)을 각각 다른 변수에 저장한다.
+- Scanner를 사용해서 사용자가 입력한 값을 받아온다.
+
+```java
+Scanner sc = new Scanner(System.in);
+System.out.print(PROMPT);
+```
+
+- 단어(word), 주어진 숫자(n), 이동 방향(direction)을 각각 다른 변수에 저장한 뒤 스캐너를 닫아준다.
+
+```java
+String word = sc.next();
+int n = sc.nextInt();
+String direction = sc.next().toLowerCase();
+sc.close();
+```
+
+- PushWords 인스턴스를 생성한 뒤, isLeft 메서드를 통해 이동 방향을 확인한다.
+
+```java
+PushWords pw = new PushWords(word);
+boolean left = pw.isLeft(n, direction);
+```
+
+- left가 true라면 pushLeft메서드를 실행하고, false라면 pushRight 메서드를 실행 한 뒤, 결과값을 출력한다.
+
+```java
+if (left) pw.pushLeft(n);
+else pw.pushRight(n);
+pw.printWord(pw.deque);
+```
 
 <br/>
 
 ## 2. PushWords 클래스
-
-### **메서드**
 
 | name                         | description                           |
 | ---------------------------- | ------------------------------------- |
