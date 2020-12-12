@@ -2,6 +2,8 @@ package janeljs.test.two;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FlatCube {
 	Deque<String> cubeTop, cubeMiddle, cubeBottom;
@@ -19,6 +21,19 @@ public class FlatCube {
 			cubeBottom.add(cube[2][i]);
 		}
 
+	}
+	
+	void pushCubeByCommands(String cmd) {
+		Map<String, Runnable> commands = new HashMap<>();
+		commands.put("U", () -> pushLeft(cubeTop));
+		commands.put("U'", () -> pushRight(cubeTop));
+		commands.put("R", () -> pushRightUp());
+		commands.put("R'", () -> pushRightDown());
+		commands.put("L", () -> pushLeftDown());
+		commands.put("L'", () -> pushLeftUp());
+		commands.put("B", () -> pushRight(cubeBottom));
+		commands.put("B'", () -> pushLeft(cubeBottom));
+		commands.get(cmd).run();
 	}
 
 	void pushLeft(Deque<String> deque) {
