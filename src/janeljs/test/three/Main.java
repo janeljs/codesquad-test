@@ -1,4 +1,4 @@
-package janeljs.test.one;
+package janeljs.test.three;
 
 import java.util.Scanner;
 
