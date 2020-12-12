@@ -14,5 +14,13 @@ public class Main {
 		String direction = sc.next().toLowerCase();
 
 		sc.close();
+		
+		PushWords pw = new PushWords(word);
+		boolean left = pw.isLeft(n, direction);
+		
+		if (left) pw.pushLeft(n);
+		else pw.pushRight(n);
+		
+		pw.printWord(pw.deque);
 	}
 }
