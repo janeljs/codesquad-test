@@ -16,9 +16,8 @@ public class Main {
 		sc.close();
 		
 		PushWords pw = new PushWords(word);
-		boolean left = pw.isLeft(n, direction);
-		
-		if (left) pw.pushLeft(n);
+
+		if (pw.isLeft(n, direction)) pw.pushLeft(n);
 		else pw.pushRight(n);
 		
 		pw.printWord(pw.deque);
