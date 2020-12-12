@@ -4,11 +4,9 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class PushWords {
-	boolean left;
 	Deque<Character> deque;
 
 	public PushWords(String word) {
-		left = false;
 		deque = new ArrayDeque<>();
 		for (int i = 0; i < word.length(); i++) {
 			deque.addLast(word.charAt(i));
@@ -17,8 +15,8 @@ public class PushWords {
 
 	boolean isLeft(int n, String direction) {
 		if ((n > 0 && direction.equals("l")) || (n < 0 && direction.equals("r")))
-			left = true;
-		return left;
+			return true;
+		return false;
 	}
 
 	void pushLeft(int n) {
