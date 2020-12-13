@@ -112,23 +112,23 @@ p.runPrompt();
 4. 명령어 리스트가 저장된 cmdQueue를 반환한다.
 
 ```java
-ArrayList<String> getCommandKeyList(Scanner sc) {
-	String cmd = sc.nextLine();
-	ArrayList<String> cmdQueue = new ArrayList<>();
-	int countSingleQuote = 0;
-	for (int i = 0; i < cmd.length(); i++) {
-		String cmdKey = Character.toString(cmd.charAt(i)).toUpperCase();
+   ArrayList<String> getCommandKeyList(Scanner sc) {
+       String cmd = sc.nextLine();
+       ArrayList<String> cmdQueue = new ArrayList<>();
+       int countSingleQuote = 0;
+       for (int i = 0; i < cmd.length(); i++) {
+           String cmdKey = Character.toString(cmd.charAt(i)).toUpperCase();
 
-		if (cmdKey.equals("'")) {
-			countSingleQuote++;
-			cmdQueue.set(i - countSingleQuote, cmdQueue.get(i - countSingleQuote) + "'");
-			continue;
-		}
-		cmdQueue.add(cmdKey);
-	}
+           if (cmdKey.equals("'")) {
+               countSingleQuote++;
+               cmdQueue.set(i - countSingleQuote, cmdQueue.get(i - countSingleQuote) + "'");
+               continue;
+           }
+           cmdQueue.add(cmdKey);
+       }
 
-	return cmdQueue;
-}
+       return cmdQueue;
+   }
 ```
 
 <br/>
@@ -139,18 +139,18 @@ ArrayList<String> getCommandKeyList(Scanner sc) {
 2. 만약 평면 큐브를 밀라는 명령어가 아닌 종료 명령어("Q")가 나온다면, isLoop를 false로 바꾼 뒤 프로그램을 종료한다.
 
 ```java
-void selectCommand(FlatCube cube, ArrayList<String> cmdQueue) {
-	for (String x : cmdQueue) {
-		if (x.equals("Q")) {
-			isLoop = false;
-			System.out.println("Bye~");
-			break;
-		}
-		System.out.println("\n" + x);
-		cube.pushCubeByCommands(x);
-		cube.printFlatCube();
-	}
-}
+   void selectCommand(FlatCube cube, ArrayList<String> cmdQueue) {
+       for (String x : cmdQueue) {
+           if (x.equals("Q")) {
+               isLoop = false;
+               System.out.println("Bye~");
+               break;
+           }
+           System.out.println("\n" + x);
+           cube.pushCubeByCommands(x);
+           cube.printFlatCube();
+       }
+   }
 ```
 
 <br/>
@@ -162,20 +162,20 @@ void selectCommand(FlatCube cube, ArrayList<String> cmdQueue) {
 3. 스캐너를 닫아준다.
 
 ```java
-void runPrompt() {
-	FlatCube cube = new FlatCube();
-	cube.printFlatCube();
+   void runPrompt() {
+       FlatCube cube = new FlatCube();
+       cube.printFlatCube();
 
-	Scanner sc = new Scanner(System.in);
+       Scanner sc = new Scanner(System.in);
 
-	final String PROMPT = "CUBE> ";
+       final String PROMPT = "CUBE> ";
 
-	while (isLoop) {
-		System.out.print("\n" + PROMPT);
-		selectCommand(cube, getCommandKeyList(sc));
-	}
-	sc.close();
-}
+       while (isLoop) {
+           System.out.print("\n" + PROMPT);
+           selectCommand(cube, getCommandKeyList(sc));
+       }
+       sc.close();
+   }
 ```
 
 <br/>
@@ -185,26 +185,26 @@ void runPrompt() {
 1. 단어 밀어내기 구현을 위한 deque를 선언한다.
 
 ```java
-Deque<String> cubeTop, cubeMiddle, cubeBottom;
+    Deque<String> cubeTop, cubeMiddle, cubeBottom;
 ```
 
 2. 생성자에서 각 인스턴스 변수에 대한 객체를 생성해주고, 생성된 객체를 문제에서 지정한 초기값으로 초기화해준다.
 
 ```java
-public FlatCube() {
-	cubeTop = new ArrayDeque<>();
-	cubeMiddle = new ArrayDeque<>();
-	cubeBottom = new ArrayDeque<>();
+    public FlatCube() {
+        cubeTop = new ArrayDeque<>();
+        cubeMiddle = new ArrayDeque<>();
+        cubeBottom = new ArrayDeque<>();
 
-	String[][] cube = { { "R", "R", "W" }, { "G", "C", "W" }, { "G", "B", "B" } };
+        String[][] cube = { { "R", "R", "W" }, { "G", "C", "W" }, { "G", "B", "B" } };
 
-	for (int i = 0; i < 3; i++) {
-		cubeTop.add(cube[0][i]);
-		cubeMiddle.add(cube[1][i]);
-		cubeBottom.add(cube[2][i]);
-	}
+        for (int i = 0; i < 3; i++) {
+            cubeTop.add(cube[0][i]);
+            cubeMiddle.add(cube[1][i]);
+            cubeBottom.add(cube[2][i]);
+        }
 
-}
+    }
 ```
 
 3. 단어 밀어내기 및 큐브 출력에 필요한 메서드를 정의한다.
@@ -229,18 +229,18 @@ public FlatCube() {
 2. pushCubeByCommands함수가 실행될 때마다 cmd 문자열을 키로 갖고있는 메서드가 실행된다.
 
 ```java
-void pushCubeByCommands(String cmd) {
-	Map<String, Runnable> commands = new HashMap<>();
-	commands.put("U", () -> pushLeft(cubeTop));
-	commands.put("U'", () -> pushRight(cubeTop));
-	commands.put("R", () -> pushRightUp());
-	commands.put("R'", () -> pushRightDown());
-	commands.put("L", () -> pushLeftDown());
-	commands.put("L'", () -> pushLeftUp());
-	commands.put("B", () -> pushRight(cubeBottom));
-	commands.put("B'", () -> pushLeft(cubeBottom));
-	commands.get(cmd).run();
-}
+    void pushCubeByCommands(String cmd) {
+        Map<String, Runnable> commands = new HashMap<>();
+        commands.put("U", () -> pushLeft(cubeTop));
+        commands.put("U'", () -> pushRight(cubeTop));
+        commands.put("R", () -> pushRightUp());
+        commands.put("R'", () -> pushRightDown());
+        commands.put("L", () -> pushLeftDown());
+        commands.put("L'", () -> pushLeftUp());
+        commands.put("B", () -> pushRight(cubeBottom));
+        commands.put("B'", () -> pushLeft(cubeBottom));
+        commands.get(cmd).run();
+    }
 ```
 
 <br/>
@@ -252,13 +252,13 @@ void pushCubeByCommands(String cmd) {
 2. 매개변수로는 좌, 우로 이동하는 cubeTop 또는 cubeBottom을 넣으면 된다.
 
 ```java
-void pushLeft(Deque<String> deque) {
-	deque.addLast(deque.removeFirst());
-}
+    void pushLeft(Deque<String> deque) {
+        deque.addLast(deque.removeFirst());
+    }
 
-void pushRight(Deque<String> deque) {
-	deque.addFirst(deque.removeLast());
-}
+    void pushRight(Deque<String> deque) {
+        deque.addFirst(deque.removeLast());
+    }
 ```
 
 <br/>
@@ -271,12 +271,12 @@ void pushRight(Deque<String> deque) {
 4. pushLeftDown, pushRightUp, pushRightDown 메서드의 경우에도 동일한 로직으로 구현할 수 있다.
 
 ```java
-void pushLeftUp() {
-	String temp = cubeTop.removeFirst();
-	cubeTop.addFirst(cubeMiddle.removeFirst());
-	cubeMiddle.addFirst(cubeBottom.removeFirst());
-	cubeBottom.addFirst(temp);
-}
+    void pushLeftUp() {
+        String temp = cubeTop.removeFirst();
+        cubeTop.addFirst(cubeMiddle.removeFirst());
+        cubeMiddle.addFirst(cubeBottom.removeFirst());
+        cubeBottom.addFirst(temp);
+    }
 ```
 
 <br/>
@@ -288,16 +288,16 @@ void pushLeftUp() {
 2. printFlatCube 메서드 호출 시 평면 큐브의 형태로 값이 출력된다.
 
 ```java
-void printCubeComponents(Deque<String> deque) {
-	for (String x : deque) {
-		System.out.print(x + " ");
-	}
-	System.out.println();
-}
+    void printCubeComponents(Deque<String> deque) {
+        for (String x : deque) {
+            System.out.print(x + " ");
+        }
+        System.out.println();
+    }
 
-void printFlatCube() {
-	printCubeComponents(cubeTop);
-	printCubeComponents(cubeMiddle);
-	printCubeComponents(cubeBottom);
-}
+    void printFlatCube() {
+        printCubeComponents(cubeTop);
+        printCubeComponents(cubeMiddle);
+        printCubeComponents(cubeBottom);
+    }
 ```
