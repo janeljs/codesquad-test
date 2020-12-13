@@ -16,6 +16,10 @@ public class Prompt {
         while (isLoop) {
             System.out.print("\n" + PROMPT);
             selectCommand(cube, getCommandKeyList(sc));
+            if(cube.checkAnswer()) {
+                System.out.println("\n정답입니다. 축하드립니다. 뚜뚜뚜.");
+                isLoop = false;
+            }
         }
         sc.close();
     }
