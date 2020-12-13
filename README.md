@@ -39,6 +39,13 @@ atc
 
 입력값을 받아오고 프로그램을 실행시키기 위한 Main class와 단어를 밀어내기 위한 PushWords class를 구현했다.
 
+### 📑 목차
+
+[1. Main class](#Main-클래스)  
+[2. PushWords class](#PushWords-클래스)
+
+<br/>
+
 ## Main 클래스
 
 1. PROMPT를 final 변수로 선언한다.
@@ -91,12 +98,12 @@ Deque<Character> deque;
 2. word를 인자로 받고, word 문자열의 각 글자를 deque에 집어넣는 생성자를 정의한다.
 
 ```java
-public PushWords(String word) {
-	deque = new ArrayDeque<>();
-	for (int i = 0; i < word.length(); i++) {
-		deque.addLast(word.charAt(i));
-	}
-}
+    public PushWords(String word) {
+        deque = new ArrayDeque<>();
+        for (int i = 0; i < word.length(); i++) {
+            deque.addLast(word.charAt(i));
+        }
+    }
 ```
 
 3. 단어 밀어내기 구현에 필요한 메서드를 정의한다.
@@ -115,11 +122,11 @@ public PushWords(String word) {
 n이 양수 일 때는 입력한 문자대로, 음수일 때는 반대 방향으로 push된다는 점을 고려하여 코드를 설계하였다.
 
 ```java
-boolean isLeft(int n, String direction) {
-	if ((n > 0 && direction.equals("l")) || (n < 0 && direction.equals("r")))
-		return true;
-	return false;
-}
+    boolean isLeft(int n, String direction) {
+        if ((n > 0 && direction.equals("l")) || (n < 0 && direction.equals("r")))
+            return true;
+        return false;
+    }
 ```
 
 <br/>
@@ -129,12 +136,12 @@ boolean isLeft(int n, String direction) {
 n이 음수인 경우를 고려하여, 이동 횟수를 저장하는 변수(numOfMovements)에 n의 절댓값을 저장하였다. deque의 첫 번째 원소를 꺼내어 마지막에 삽입하는 작업을 이동 횟수만큼 반복하면, 주어진 숫자 갯수만큼 단어를 밀어내고 밀려나간 단어를 반대쪽에 채울 수 있다.
 
 ```java
-void pushLeft(int n) {
-	int numOfMovements = Math.abs(n);
-	for (int i = 0; i < numOfMovements; i++) {
-		deque.addLast(deque.removeFirst());
-	}
-}
+    void pushLeft(int n) {
+        int numOfMovements = Math.abs(n);
+        for (int i = 0; i < numOfMovements; i++) {
+            deque.addLast(deque.removeFirst());
+        }
+    }
 ```
 
 <br/>
@@ -144,12 +151,12 @@ void pushLeft(int n) {
 pushLeft와 같은 방법으로 구현할 수 있다. 이 경우에는 deque의 마지막 원소를 꺼내어 deque의 첫 번째 원소로 삽입해주면 된다.
 
 ```java
-void pushRight(int n) {
-	int numOfMovements = Math.abs(n);
-	for (int i = 0; i < numOfMovements; i++) {
-		deque.addFirst(deque.removeLast());
-	}
-}
+    void pushRight(int n) {
+        int numOfMovements = Math.abs(n);
+        for (int i = 0; i < numOfMovements; i++) {
+            deque.addFirst(deque.removeLast());
+        }
+    }
 ```
 
 <br/>
@@ -159,9 +166,9 @@ void pushRight(int n) {
 pushLeft 또는 pushRight 메서드를 실행 한 뒤, deque를 순회하며 요소들을 출력하면 결과값을 얻을 수 있다.
 
 ```java
-void printWord(Deque<Character> deque) {
-	for (char x: deque) {
-		System.out.print(x);
-	}
-}
+    void printWord(Deque<Character> deque) {
+        for (char x : deque) {
+            System.out.print(x);
+        }
+    }
 ```
