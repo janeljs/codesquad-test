@@ -13,7 +13,7 @@ public class Cube {
     private final String MARGIN = "    ";
     private final String LONG_MARGIN = "               ";
     static int count = 0;
-    
+
     public Cube() {
         cubeLeft = new String[3][3];
         cubeFront = new String[3][3];
@@ -36,7 +36,7 @@ public class Cube {
             }
         }
     }
-    
+
     void scrambleCube() {
 
         for (int i = 0; i < 30; i++) {
@@ -44,6 +44,22 @@ public class Cube {
             rotateCube(COMMAND_KEYS[randomNum]);
         }
     }
+
+    boolean checkAnswer() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (cubeLeft[i][j].equals("W")==false) return false;
+                if (cubeFront[i][j].equals("O")==false) return false;
+                if (cubeRight[i][j].equals("G")==false) return false;
+                if (cubeBack[i][j].equals("Y")==false) return false;
+                if (cubeUp[i][j].equals("B")==false) return false;
+                if (cubeDown[i][j].equals("R")==false) return false;
+            }
+        }
+        return true;
+    }
+    
+ 
 
     void rotateCube(String cmd) {
         Map<String, Runnable> commands = new HashMap<>();
@@ -61,8 +77,6 @@ public class Cube {
         commands.put("B'", () -> rotateBack("B'"));
         commands.get(cmd).run();
     }
-
-
 
     String[][] rotateClockwise(String[][] cubeC) {
         String[][] updatedCube = new String[3][3];
@@ -226,7 +240,7 @@ public class Cube {
         String[][] updatedCube = rotateCounterclockwise(cubeC);
         return updatedCube;
     }
-    
+
     void printRubiksCube() {
 
         printCubeUpORDown(cubeUp);
