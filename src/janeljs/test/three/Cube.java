@@ -45,30 +45,7 @@ public class Cube {
         }
     }
 
-    boolean checkAnswer() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                checkSide(i, j);
-            }
-        }
-        return true;
-    }
-
-    boolean checkSide(int i, int j) {
-        if (cubeLeft[i][j].equals("W") == false)
-            return false;
-        if (cubeFront[i][j].equals("O") == false)
-            return false;
-        if (cubeRight[i][j].equals("G") == false)
-            return false;
-        if (cubeBack[i][j].equals("Y") == false)
-            return false;
-        if (cubeUp[i][j].equals("B") == false)
-            return false;
-        if (cubeDown[i][j].equals("R") == false)
-            return false;
-        return true;
-    }
+  
 
     void rotateCube(String cmd) {
         Map<String, Runnable> commands = new HashMap<>();
@@ -278,6 +255,20 @@ public class Cube {
             printCubeSide(i, cube);
             System.out.println();
         }
+    }
+    
+    boolean checkAnswer() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (cubeLeft[i][j].equals("W")==false) return false;
+                if (cubeFront[i][j].equals("O")==false) return false;
+                if (cubeRight[i][j].equals("G")==false) return false;
+                if (cubeBack[i][j].equals("Y")==false) return false;
+                if (cubeUp[i][j].equals("B")==false) return false;
+                if (cubeDown[i][j].equals("R")==false) return false;
+            }
+        }
+        return true;
     }
 
 }
