@@ -1,5 +1,8 @@
 package janeljs.test.three;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 public class Cube {
 
     String[][] cubeLeft, cubeFront, cubeRight, cubeUp, cubeBack, cubeDown;
@@ -47,7 +50,50 @@ public class Cube {
         }
         return updatedCube;
     }
+    
+    void rotateFront(String cmd) {
+        Deque<String> cmdFront = new ArrayDeque<>();
+        cmdFront.add(cubeUp[2][0] + cubeUp[2][1] + cubeUp[2][2]);
+        cmdFront.add(cubeRight[0][0] + cubeRight[1][0] + cubeRight[2][0]);
+        cmdFront.add(cubeDown[0][2] + cubeDown[0][1] + cubeDown[0][0]);
+        cmdFront.add(cubeLeft[2][2] + cubeLeft[1][2] + cubeLeft[0][2]);
+        
+        cubeFront = rotateInnerCube(cmd, cmdFront, cubeFront);
 
+        String strUp = cmdFront.pop();
+        String strRight = cmdFront.pop();
+        String strDown = cmdFront.pop();
+        String strLeft = cmdFront.pop();
+
+        for (int i = 0; i < 3; i++) {
+            cubeUp[2][i] = Character.toString(strUp.charAt(i));
+            cubeRight[i][0] = Character.toString(strRight.charAt(i));
+            cubeDown[0][2 - i] = Character.toString(strDown.charAt(i));
+            cubeLeft[2 - i][2] = Character.toString(strLeft.charAt(i));
+        }
+        count++;
+    }
+
+    String[][] rotateInnerCube(String cmd, Deque<String> cmdC, String[][] cubeC) {
+        if (cmd.equals("F") || cmd.equals("L") || cmd.equals("D")) {
+            cmdC.addFirst(cmdC.removeLast());
+            String[][] updatedCube = rotateClockwise(cubeC);
+            return updatedCube;
+        }
+        if (cmd.equals("F'") || cmd.equals("L'") || cmd.equals("D'")) {
+            cmdC.addLast(cmdC.removeFirst());
+            String[][] updatedCube = rotateCounterclockwise(cubeC);
+            return updatedCube;
+        }
+        if (cmd.equals("U") || cmd.equals("R") || cmd.equals("B")) {
+            cmdC.addLast(cmdC.removeFirst());
+            String[][] updatedCube = rotateClockwise(cubeC);
+            return updatedCube;
+        }
+        cmdC.addFirst(cmdC.removeLast());
+        String[][] updatedCube = rotateCounterclockwise(cubeC);
+        return updatedCube;
+    }
     
    
 
