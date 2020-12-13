@@ -84,13 +84,6 @@ public class Cube {
         return updatedCube;
     }
 
-    String[] saveCommandAsStringArray(Deque<String> cmdC) {
-        String[] cmdArr = new String[4];
-        for (int i = 0; i < 4; i++) {
-            cmdArr[i] = cmdC.pop();
-        }
-        return cmdArr;
-    }
 
     void rotateFront(String cmd) {
         Deque<String> cmdFront = new ArrayDeque<>();
@@ -225,6 +218,14 @@ public class Cube {
         cmdC.addFirst(cmdC.removeLast());
         String[][] updatedCube = rotateCounterclockwise(cubeC);
         return updatedCube;
+    }
+    
+    String[] saveCommandAsStringArray(Deque<String> cmdC) {
+        String[] cmdArr = new String[4];
+        for (int i = 0; i < 4; i++) {
+            cmdArr[i] = cmdC.pop();
+        }
+        return cmdArr;
     }
 
     void printRubiksCube() {
