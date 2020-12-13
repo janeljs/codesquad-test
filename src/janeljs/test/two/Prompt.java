@@ -1,6 +1,6 @@
 package janeljs.test.two;
 
-
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
@@ -15,8 +15,7 @@ public class Prompt {
 		Scanner sc = new Scanner(System.in);
 
 		final String PROMPT = "CUBE> ";
-		
-		
+
 		while (isLoop) {
 			System.out.print("\n" + PROMPT);
 			selectCommand(cube, getCommandKeyList(sc));
@@ -24,25 +23,25 @@ public class Prompt {
 		sc.close();
 	}
 
-	Queue<String> getCommandKeyList(Scanner sc) {
+	ArrayList<String> getCommandKeyList(Scanner sc) {
 		String cmd = sc.nextLine();
-		String cmdKey = null;
-		Queue<String> cmdQueue = new LinkedList<>();
+		ArrayList<String> cmdQueue = new ArrayList<>();
+		int countSingleQuote = 0;
 		for (int i = 0; i < cmd.length(); i++) {
-			cmdKey = "" + cmd.charAt(i);
-			if (i < cmd.length() - 1) {
-				String cmdNext = "" + cmd.charAt(i + 1);
-				if (cmdNext.equals("'")) {
-					cmdKey = cmdKey + cmdNext;
-					i++;
-				}
+			String index = Character.toString(cmd.charAt(i)).toUpperCase();
+
+			if (index.equals("'")) {
+				countSingleQuote++;
+				cmdQueue.set(i - countSingleQuote, cmdQueue.get(i - countSingleQuote) + "'");
+				continue;
 			}
-			cmdQueue.add(cmdKey);
+			cmdQueue.add(index);
 		}
+	
 		return cmdQueue;
 	}
 
-	void selectCommand(FlatCube cube, Queue<String> cmdQueue) {
+	void selectCommand(FlatCube cube, ArrayList<String> cmdQueue) {
 		for (String x : cmdQueue) {
 			if (x.equals("Q")) {
 				isLoop = false;
