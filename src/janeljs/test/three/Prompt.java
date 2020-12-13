@@ -4,7 +4,21 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Prompt {
+    private final String PROMPT = "CUBE> ";
     private boolean isLoop = true;
+    
+    void runPrompt() {
+        Cube cube = new Cube();
+        cube.printRubiksCube();
+
+        Scanner sc = new Scanner(System.in);
+
+        while (isLoop) {
+            System.out.print("\n" + PROMPT);
+            selectCommand(cube, getCommandKeyList(sc));
+        }
+        sc.close();
+    }
     
     boolean isInteger(String cmd) {
         try {
