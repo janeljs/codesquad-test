@@ -272,11 +272,11 @@ void pushRight(Deque<String> deque) {
 
 ```java
 void pushLeftUp() {
-		String temp = cubeTop.removeFirst();
-		cubeTop.addFirst(cubeMiddle.removeFirst());
-		cubeMiddle.addFirst(cubeBottom.removeFirst());
-		cubeBottom.addFirst(temp);
-	}
+	String temp = cubeTop.removeFirst();
+	cubeTop.addFirst(cubeMiddle.removeFirst());
+	cubeMiddle.addFirst(cubeBottom.removeFirst());
+	cubeBottom.addFirst(temp);
+}
 ```
 
 <br/>
