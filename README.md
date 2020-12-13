@@ -245,6 +245,7 @@ function main() {
 | ----------------------------- | ---------------------------------------------------- |
 | initCube()                    | 큐브를 다 맞춰진 상태로 초기화                       |
 | scrambleCube()                | 큐브를 무작위로 섞기                                 |
+| checkAnswer()                 | 큐브가 완전히 맞춰졌다면 true, 아니라면 false를 반환 |
 | rotateCube(cmd)               | 명령어 문자열에 따라 회전 메서드를 실행              |
 | rotateClockwise(cubeC)        | 큐브의 한 면을 시계 방향으로 회전                    |
 | rotateCounterclockwise(cubeC) | 큐브의 한 면을 시계 반대 방향으로 회전               |
@@ -255,4 +256,159 @@ function main() {
 | rotateUp(cmd)                 | 큐브의 윗면을 90도 회전                              |
 | rotateDown(cmd)               | 큐브의 바닥을 90도 회전                              |
 | printRubiksCube()             | 큐브의 6면을 2차원으로 펼쳐진 상태로 출력            |
-| checkAnswer()                 | 큐브가 완전히 맞춰졌다면 true, 아니라면 false를 반환 |
+
+<br/>
+
+> **initCube 메서드 : 큐브를 다 맞춰진 상태로 초기화**
+
+2차원 배열로 선언된 큐브의 6개 면을 각각 다른 색상으로 초기화해 주었다.
+
+```java
+    void initCube() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                cubeLeft[i][j] = "W";
+                cubeFront[i][j] = "O";
+                cubeRight[i][j] = "G";
+                cubeBack[i][j] = "Y";
+                cubeUp[i][j] = "B";
+                cubeDown[i][j] = "R";
+            }
+        }
+    }
+```
+
+> **scrambleCube 메서드 : 큐브를 무작위로 섞기**
+
+1. 임의의 숫자 30개를 생성하여 COMMAND_KEYS 배열의 인덱스로 사용하였다.
+2. rotateCube메서드에 명령어를 넣어 임의의 명령이 30번 수행되어 큐브가 섞이도록 하였다.
+
+```java
+    private final String[] COMMAND_KEYS = { "L", "L'", "R", "R'", "U", "U'", "D", "D'", "F", "F'", "B", "B'" };
+
+    void scrambleCube() {
+
+        for (int i = 0; i < 30; i++) {
+            int randomNum = ThreadLocalRandom.current().nextInt(0, 12);
+            rotateCube(COMMAND_KEYS[randomNum]);
+        }
+    }
+```
+
+> **checkAnswer : 큐브가 완전히 맞춰졌다면 true, 아니라면 false를 반환**
+
+1. Cube의 6면을 순회하면서 초기값과 다른 값이 발견된다면 false를 반환한다.
+2. 모든 값이 큐브의 초기 상태와 동일하다면 true를 출력한다.
+
+```java
+    boolean checkAnswer() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (cubeLeft[i][j].equals("W")==false) return false;
+                if (cubeFront[i][j].equals("O")==false) return false;
+                if (cubeRight[i][j].equals("G")==false) return false;
+                if (cubeBack[i][j].equals("Y")==false) return false;
+                if (cubeUp[i][j].equals("B")==false) return false;
+                if (cubeDown[i][j].equals("R")==false) return false;
+            }
+        }
+        return true;
+    }
+```
+
+> **rotateCube 메서드 : 명령어 문자열에 따라 회전 메서드를 실행**
+
+step-2에서와 마찬가지로, rotateCube 메서드가 실행될 때마다 cmd 문자열을 키로 갖고있는 메서드가 실행된다.
+
+```java
+    void rotateCube(String cmd) {
+        Map<String, Runnable> commands = new HashMap<>();
+        commands.put("L", () -> rotateLeft("L"));
+        commands.put("L'", () -> rotateLeft("L'"));
+        commands.put("R", () -> rotateRight("R"));
+        commands.put("R'", () -> rotateRight("R'"));
+        commands.put("U", () -> rotateUp("U"));
+        commands.put("U'", () -> rotateUp("U'"));
+        commands.put("D", () -> rotateDown("D"));
+        commands.put("D'", () -> rotateDown("D'"));
+        commands.put("F", () -> rotateFront("F"));
+        commands.put("F'", () -> rotateFront("F'"));
+        commands.put("B", () -> rotateBack("B"));
+        commands.put("B'", () -> rotateBack("B'"));
+        commands.get(cmd).run();
+    }
+```
+
+> **rotateClockwise 메서드 : 큐브의 한 면을 시계 방향으로 회전**  
+> **rotateCounterclockwise 메서드 : 큐브의 한 면을 시계 반대 방향으로 회전**
+
+1. 루빅스 큐브의 경우 한 번의 회전 당 큐브 3개로 구성된 4개의 좁은 면과 큐브 9개로 구성된 한 개의 넓은 면이 돌아간다.
+2. 좁은 면은 Deque을 이용하여 회전시키고, 넓은 면은 rotateClockwise 및 rotateCounterclockwise 메서드를 사용하여 회전시켰다.
+
+```java
+    String[][] rotateClockwise(String[][] cubeC) {
+        String[][] updatedCube = new String[3][3];
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                updatedCube[j][2 - i] = cubeC[i][j];
+            }
+        }
+        return updatedCube;
+    }
+```
+
+> **rotateFront 메서드 : 큐브의 앞면을 90도 회전**
+
+1. Deque 자료구조를 사용한 cmdFront 객체를 생성한다.
+2. cmdFront에 앞 면이 회전될 시 돌아가는 작은 면(큐브 3개로 구성)를 삽입한다.
+3. rotateInnerCube 메서드 호출을 통해 Deque의 원소들의 순서를 바꿔준다. 이 메서드 내부에서 rotateClockwise 메서드 또한 함께 실행된다.
+   ```java
+   // rotateInnerCube 메서드 내부
+   cmdC.addFirst(cmdC.removeLast());
+   String[][] updatedCube = rotateClockwise(cubeC);
+   ```
+4. 회전된 값을 큐브에 업데이트 해준다.
+5. rotateBack, rotateLeft, rotateRight, rotateUp, rotateDown 메서드도 동일한 로직으로 구현할 수 있다.
+
+```java
+    void rotateFront(String cmd) {
+        Deque<String> cmdFront = new ArrayDeque<>();
+        cmdFront.add(cubeUp[2][0] + cubeUp[2][1] + cubeUp[2][2]);
+        cmdFront.add(cubeRight[0][0] + cubeRight[1][0] + cubeRight[2][0]);
+        cmdFront.add(cubeDown[0][2] + cubeDown[0][1] + cubeDown[0][0]);
+        cmdFront.add(cubeLeft[2][2] + cubeLeft[1][2] + cubeLeft[0][2]);
+
+        cubeFront = rotateInnerCube(cmd, cmdFront, cubeFront);
+        String[] temp = saveCommandAsStringArray(cmdFront);
+
+        for (int i = 0; i < 3; i++) {
+            cubeUp[2][i] = Character.toString(temp[0].charAt(i));
+            cubeRight[i][0] = Character.toString(temp[1].charAt(i));
+            cubeDown[0][2 - i] = Character.toString(temp[2].charAt(i));
+            cubeLeft[2 - i][2] = Character.toString(temp[3].charAt(i));
+        }
+        count++;
+    }
+```
+
+> **printRubiksCube : 큐브의 6면을 2차원으로 펼쳐진 상태로 출력**
+
+1. Cube 내에 인스턴스 변수로 선언된 6개의 면을 순회하며 원소를 출력한다.
+2. 들여쓰기를 줄이기 위해 printCubeSide라는 메서드를 사용하였다.
+
+```java
+    void printRubiksCube() {
+
+        printCubeUpORDown(cubeUp);
+        System.out.println();
+        for (int i = 0; i < 3; i++) {
+            printCubeSide(i, cubeLeft);
+            printCubeSide(i, cubeFront);
+            printCubeSide(i, cubeRight);
+            printCubeSide(i, cubeBack);
+            System.out.println();
+        }
+        System.out.println();
+        printCubeUpORDown(cubeDown);
+    }
+```
