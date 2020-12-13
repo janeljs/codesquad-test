@@ -57,6 +57,12 @@ public class Prompt {
     
     void selectCommand(Cube cube, ArrayList<String> cmdQueue) {
         for (String x : cmdQueue) {
+            if (x.equals("S")) {
+                System.out.println("\nNewly Scrambled Rubik's Cube");
+                cube.scrambleCube();
+                cube.printRubiksCube();
+                break;
+            }
             if (x.equals("Q")) {
                 isLoop = false;
                 break;
