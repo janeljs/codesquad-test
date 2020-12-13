@@ -4,14 +4,16 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Cube {
 
     String[][] cubeLeft, cubeFront, cubeRight, cubeUp, cubeBack, cubeDown;
-    static int count = 0;
+    private final String[] COMMAND_KEYS = { "L", "L'", "R", "R'", "U", "U'", "D", "D'", "F", "F'", "B", "B'" };
     private final String MARGIN = "    ";
     private final String LONG_MARGIN = "               ";
-
+    static int count = 0;
+    
     public Cube() {
         cubeLeft = new String[3][3];
         cubeFront = new String[3][3];
@@ -32,6 +34,14 @@ public class Cube {
                 cubeUp[i][j] = "B";
                 cubeDown[i][j] = "R";
             }
+        }
+    }
+    
+    void scrambleCube() {
+
+        for (int i = 0; i < 30; i++) {
+            int randomNum = ThreadLocalRandom.current().nextInt(0, 12);
+            rotateCube(COMMAND_KEYS[randomNum]);
         }
     }
 
