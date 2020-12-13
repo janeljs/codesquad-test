@@ -225,7 +225,7 @@ p.runPrompt();
 
 > **pushCubeByCommands 메서드 : 명령어 문자열에 따라 밀기 메서드를 실행**
 
-1. Prompt class에서 if~else 또는 switch~case문 사용을 피하기 위해 HashMap에 명령어 별 메서드를 저장하였다.
+1. Prompt class에서 `if~else`문 또는 `switch~case`문 사용을 피하기 위해 HashMap에 명령어 별 메서드를 저장하였다.
 2. pushCubeByCommands함수가 실행될 때마다 cmd 문자열을 키로 갖고있는 메서드가 실행된다.
 
 ```java
