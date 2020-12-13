@@ -1,8 +1,6 @@
 package janeljs.test.two;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Scanner;
 
 public class Prompt {
