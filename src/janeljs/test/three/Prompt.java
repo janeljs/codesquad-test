@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Prompt {
+    private boolean isLoop = true;
     
     boolean isInteger(String cmd) {
         try {
@@ -38,6 +39,18 @@ public class Prompt {
             if (!isInteger(cmdKey)) cmdQueue.add(cmdKey);
         }
         return cmdQueue;
+    }
+    
+    void selectCommand(Cube cube, ArrayList<String> cmdQueue) {
+        for (String x : cmdQueue) {
+            if (x.equals("Q")) {
+                isLoop = false;
+                break;
+            }
+            System.out.println("\n" + x);
+            cube.rotateCube(x);
+            cube.printRubiksCube();
+        }
     }
     
     
