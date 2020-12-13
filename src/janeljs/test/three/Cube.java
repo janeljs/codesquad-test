@@ -51,6 +51,14 @@ public class Cube {
         return updatedCube;
     }
     
+    String[] saveCommandAsStringArray (Deque<String> cmdC) {
+        String[] cmdArr = new String[4];
+        for (int i = 0; i < 4; i++) {
+            cmdArr[i] = cmdC.pop();
+        }
+        return cmdArr;
+    }
+    
     void rotateFront(String cmd) {
         Deque<String> cmdFront = new ArrayDeque<>();
         cmdFront.add(cubeUp[2][0] + cubeUp[2][1] + cubeUp[2][2]);
@@ -59,17 +67,13 @@ public class Cube {
         cmdFront.add(cubeLeft[2][2] + cubeLeft[1][2] + cubeLeft[0][2]);
         
         cubeFront = rotateInnerCube(cmd, cmdFront, cubeFront);
-
-        String strUp = cmdFront.pop();
-        String strRight = cmdFront.pop();
-        String strDown = cmdFront.pop();
-        String strLeft = cmdFront.pop();
+        String[] temp = saveCommandAsStringArray(cmdFront);
 
         for (int i = 0; i < 3; i++) {
-            cubeUp[2][i] = Character.toString(strUp.charAt(i));
-            cubeRight[i][0] = Character.toString(strRight.charAt(i));
-            cubeDown[0][2 - i] = Character.toString(strDown.charAt(i));
-            cubeLeft[2 - i][2] = Character.toString(strLeft.charAt(i));
+            cubeUp[2][i] = Character.toString(temp[0].charAt(i));
+            cubeRight[i][0] = Character.toString(temp[1].charAt(i));
+            cubeDown[0][2 - i] = Character.toString(temp[2].charAt(i));
+            cubeLeft[2 - i][2] = Character.toString(temp[3].charAt(i));
         }
         count++;
     }
