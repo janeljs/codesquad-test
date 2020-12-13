@@ -9,6 +9,8 @@ public class Cube {
 
     String[][] cubeLeft, cubeFront, cubeRight, cubeUp, cubeBack, cubeDown;
     static int count = 0;
+    private final String MARGIN = "    ";
+    private final String LONG_MARGIN = "               ";
 
     public Cube() {
         cubeLeft = new String[3][3];
@@ -32,7 +34,7 @@ public class Cube {
             }
         }
     }
-    
+
     void rotateCube(String cmd) {
         Map<String, Runnable> commands = new HashMap<>();
         commands.put("L", () -> rotateLeft("L"));
@@ -49,6 +51,8 @@ public class Cube {
         commands.put("B'", () -> rotateBack("B'"));
         commands.get(cmd).run();
     }
+
+
 
     String[][] rotateClockwise(String[][] cubeC) {
         String[][] updatedCube = new String[3][3];
@@ -212,4 +216,35 @@ public class Cube {
         String[][] updatedCube = rotateCounterclockwise(cubeC);
         return updatedCube;
     }
+    
+    void printRubiksCube() {
+
+        printCubeUpORDown(cubeUp);
+        System.out.println();
+        for (int i = 0; i < 3; i++) {
+            printCubeSide(i, cubeLeft);
+            printCubeSide(i, cubeFront);
+            printCubeSide(i, cubeRight);
+            printCubeSide(i, cubeBack);
+            System.out.println();
+        }
+        System.out.println();
+        printCubeUpORDown(cubeDown);
+    }
+
+    void printCubeSide(int i, String[][] cube) {
+        for (int j = 0; j < 3; j++) {
+            System.out.print(" " + cube[i][j]);
+        }
+        System.out.print(MARGIN);
+    }
+
+    void printCubeUpORDown(String[][] cube) {
+        for (int i = 0; i < 3; i++) {
+            System.out.print(LONG_MARGIN);
+            printCubeSide(i, cube);
+            System.out.println();
+        }
+    }
+
 }
