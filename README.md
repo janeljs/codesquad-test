@@ -256,17 +256,3 @@ function main() {
 | rotateDown(cmd)               | 큐브의 바닥을 90도 회전                              |
 | printRubiksCube()             | 큐브의 6면을 2차원으로 펼쳐진 상태로 출력            |
 | checkAnswer()                 | 큐브가 완전히 맞춰졌다면 true, 아니라면 false를 반환 |
-
-initCube() 큐브를 다 맞춰진 상태로 초기화
-scrambleCube() 큐브를 무작위로 섞기
-rotateCube(cmd) 명령어 문자열에 따라 회전 메서드를 실행
-rotateClockwise(cubeC) 큐브의 한 면을 시계 방향으로 회전
-rotateCounterclockwise(cubeC) 큐브의 한 면을 시계 반대 방향으로 회전
-rotateFront(cmd) 큐브의 앞면을 90도 회전
-rotateBack(cmd) 큐브의 뒷면을 90도 회전
-rotateLeft(cmd) 큐브의 왼쪽 면을 90도 회전
-rotateRight(cmd) 큐브의 오른쪽 면을 90도 회전
-rotateUp(cmd) 큐브의 윗면을 90도 회전
-rotateDown(cmd) 큐브의 바닥을 90도 회전
-printRubiksCube() 큐브의 6면을 2차원으로 펼쳐진 상태로 출력
-checkAnswer() 큐브가 완전히 맞춰졌다면 true, 아니라면 false를 반환
