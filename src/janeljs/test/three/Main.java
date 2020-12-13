@@ -1,18 +1,14 @@
 package janeljs.test.three;
 
-import java.util.Scanner;
+
 
 public class Main {
-	private static final String PROMPT = "> ";
 
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		System.out.print(PROMPT);
 
-		String word = sc.next();
-		int n = sc.nextInt();
-		String direction = sc.next().toLowerCase();
-
-		sc.close();
-	}
+    public static void main(String[] args) {
+        Prompt p = new Prompt();
+        p.runPrompt();
+        System.out.println("조작갯수: " + Cube.count);
+        System.out.println("이용해주셔서 감사합니다. 뚜뚜뚜.");
+    }
 }
