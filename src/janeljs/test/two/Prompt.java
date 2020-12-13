@@ -28,14 +28,14 @@ public class Prompt {
 		ArrayList<String> cmdQueue = new ArrayList<>();
 		int countSingleQuote = 0;
 		for (int i = 0; i < cmd.length(); i++) {
-			String index = Character.toString(cmd.charAt(i)).toUpperCase();
+			String cmdKey = Character.toString(cmd.charAt(i)).toUpperCase();
 
-			if (index.equals("'")) {
+			if (cmdKey.equals("'")) {
 				countSingleQuote++;
 				cmdQueue.set(i - countSingleQuote, cmdQueue.get(i - countSingleQuote) + "'");
 				continue;
 			}
-			cmdQueue.add(index);
+			cmdQueue.add(cmdKey);
 		}
 	
 		return cmdQueue;
